@@ -6,9 +6,9 @@ import { booksCsv, rangeBooks } from '@/lib/domain/books';
 
 export const dynamic = 'force-dynamic';
 
-// GET ?from&to → CSV file for the accountant (one line per day, taxes split, tenders as columns).
+// GET ?from&to → CSV file for the accountant (one line per day, taxes split, tenders as columns). books.export, logged.
 export async function GET(req: Request) {
-  const c = await requireMerchant(req);
+  const c = await requireMerchant(req, 'base', { action: 'books.export', audit: 'always' });
   if (!isCtx(c)) return c;
   const q = new URL(req.url).searchParams;
   const from = q.get('from') ?? localDate(); const to = q.get('to') ?? from;

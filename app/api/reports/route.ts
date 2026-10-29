@@ -6,9 +6,9 @@ import { platformTotals, rangeBooks } from '@/lib/domain/books';
 
 export const dynamic = 'force-dynamic';
 
-// GET ?from=YYYY-MM-DD&to=YYYY-MM-DD (default today): one line per day + platform sales from Food Hub.
+// GET ?from=YYYY-MM-DD&to=YYYY-MM-DD (default today): one line per day + platform sales from Food Hub (books.view).
 export async function GET(req: Request) {
-  const c = await requireMerchant(req);
+  const c = await requireMerchant(req, 'base', { action: 'books.view' });
   if (!isCtx(c)) return c;
   const q = new URL(req.url).searchParams;
   const from = q.get('from') ?? localDate(); const to = q.get('to') ?? from;
